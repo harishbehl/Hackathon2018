@@ -1,17 +1,21 @@
 package com.ivrs.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.twilio.twiml.MessagingResponse;
-import com.twilio.twiml.messaging.Body;
-import com.twilio.twiml.messaging.Body.Builder;
-import com.twilio.twiml.messaging.Message;
+import com.google.gson.Gson;
 
 @RestController
 public class IVRSController {
@@ -19,43 +23,74 @@ public class IVRSController {
 	@RequestMapping(value = "/validatePin")
 	@ResponseBody
 	public ResponseEntity<Object> validatePin(@RequestParam("pin") String pin) {
-		MessagingResponse response1 = null;
-		pin=pin.trim();
-		if (!StringUtils.isEmpty(pin) && pin.equalsIgnoreCase("125") ){
+
+		pin = pin.trim();
+		if (!StringUtils.isEmpty(pin) && pin.equalsIgnoreCase("125")) {
 			System.out.println("pin: " + pin);
-			Builder builder = new Body.Builder("Success");
-			Body body = builder.build();
-			Message message = new Message.Builder().body(body).build();
-			response1 = new MessagingResponse.Builder().message(message).build();
 			System.out.println("------------comming is success block");
 			return ResponseEntity.status(HttpStatus.OK).body("success");
-			
+
 		} else {
-			Builder builder = new Body.Builder("Fail");
-			System.out.println("failure block pin: " + pin+"a");
-			Body body = builder.build();
-			Message message = new Message.Builder().body(body).build();
-			response1 = new MessagingResponse.Builder().message(message).build();
+			System.out.println("failure block pin: " + pin + "a");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
-		
+
 	}
-	
-	@RequestMapping(value = "/getAgent")
+
+	@RequestMapping(value = "/getAgent", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Object> getAgent(@RequestParam("agentType") String agentType) {
-		agentType=agentType.trim();
-		if (!StringUtils.isEmpty(agentType) && (agentType.equalsIgnoreCase("1") ||agentType.equalsIgnoreCase("2") ||
-				agentType.equalsIgnoreCase("3") || agentType.equalsIgnoreCase("4") || agentType.equalsIgnoreCase("5")
-				|| agentType.equalsIgnoreCase("6"))){
-			return ResponseEntity.status(HttpStatus.OK).body("success");
-		}else {
-			Builder builder = new Body.Builder("Fail");
-			System.out.println("failure block pin: " + agentType+"a");
-			Body body = builder.build();
+	public ResponseEntity<Object> getAgent(@RequestParam("type") String agentType) {
+		agentType = agentType.trim();
+		System.out.println("agent type ::===" + agentType);
+		if (!StringUtils.isEmpty(agentType) && (agentType.equalsIgnoreCase("1") || agentType.equalsIgnoreCase("2")
+				|| agentType.equalsIgnoreCase("3") || agentType.equalsIgnoreCase("4") || agentType.equalsIgnoreCase("5")
+				|| agentType.equalsIgnoreCase("6"))) {
+			System.out.println("agent type ::===" + agentType);
+
+			String number = null;
+			switch (Integer.parseInt(agentType)) {
+
+			case 1:
+				number = getControllerAgent();
+				break;
+			case 2:
+				number = getJavaAgent();
+				break;
+
+			case 3:
+				number = getNetAgent();
+				break;
+			}
+
+			String jsonStr = null;
+			Map<String, String> numberMap = new HashMap<String, String>();
+			numberMap.put("number", number);
+			Gson gsonObj = new Gson();
+			jsonStr = gsonObj.toJson(numberMap);
+			return new ResponseEntity<Object>(jsonStr, HttpStatus.OK);
+
+		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
-		
+
 	}
-	
+
+	private String getControllerAgent() {
+		String number = "7406048080";
+		return number;
+
+	}
+
+	private String getJavaAgent() {
+		String number = "7406048080";
+		return number;
+
+	}
+
+	private String getNetAgent() {
+		String number = "7406048080";
+		return number;
+
+	}
+
 }
