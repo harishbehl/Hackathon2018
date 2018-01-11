@@ -3,8 +3,6 @@ package com.ivrs.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +35,10 @@ public class IVRSController {
 
 	}
 
-	@RequestMapping(value = "/getAgent", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAgent", method = RequestMethod.GET )
 	@ResponseBody
 	public ResponseEntity<Object> getAgent(@RequestParam("type") String agentType) {
+		
 		agentType = agentType.trim();
 		System.out.println("agent type ::===" + agentType);
 		if (!StringUtils.isEmpty(agentType) && (agentType.equalsIgnoreCase("1") || agentType.equalsIgnoreCase("2")
@@ -67,28 +66,34 @@ public class IVRSController {
 			numberMap.put("number", number);
 			Gson gsonObj = new Gson();
 			jsonStr = gsonObj.toJson(numberMap);
+			System.out.println("Returning json object" + jsonStr);
 			return new ResponseEntity<Object>(jsonStr, HttpStatus.OK);
+			
 
 		} else {
+			System.out.println("Bad request");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 
 	}
 
 	private String getControllerAgent() {
-		String number = "7406048080";
+		//Rajendra's number
+		String number = "+917406048080";
 		return number;
 
 	}
 
 	private String getJavaAgent() {
-		String number = "7406048080";
+		//Harish number
+		String number = "+919618889577";
 		return number;
 
 	}
 
 	private String getNetAgent() {
-		String number = "7406048080";
+		//Saradhi's number
+		String number = "+917981418416";
 		return number;
 
 	}

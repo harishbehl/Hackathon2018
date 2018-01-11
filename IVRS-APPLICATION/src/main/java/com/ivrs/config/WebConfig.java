@@ -17,7 +17,7 @@ configurer.favorPathExtension(false).
     parameterName("mediaType").
     ignoreAcceptHeader(true).
     useJaf(false).
-    defaultContentType(MediaType.APPLICATION_XML).
+    defaultContentType(MediaType.APPLICATION_JSON).
     mediaType("xml", MediaType.APPLICATION_XML).
     mediaType("json", MediaType.APPLICATION_JSON);
   }
