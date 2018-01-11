@@ -38,7 +38,7 @@ public class IVRSController {
 	@RequestMapping(value = "/getAgent", method = RequestMethod.GET )
 	@ResponseBody
 	public ResponseEntity<Object> getAgent(@RequestParam("type") String agentType) {
-		
+		 
 		agentType = agentType.trim();
 		System.out.println("agent type ::===" + agentType);
 		if (!StringUtils.isEmpty(agentType) && (agentType.equalsIgnoreCase("1") || agentType.equalsIgnoreCase("2")
@@ -53,12 +53,11 @@ public class IVRSController {
 				number = getControllerAgent();
 				break;
 			case 2:
-				number = getJavaAgent();
+				number = getNetAgent();
 				break;
 
 			case 3:
-				number = getNetAgent();
-				break;
+				number = getJavaAgent();
 			}
 
 			String jsonStr = null;
@@ -79,21 +78,21 @@ public class IVRSController {
 
 	private String getControllerAgent() {
 		//Rajendra's number
-		String number = "+917406048080";
+		String number = "+911223444";
 		return number;
 
 	}
 
 	private String getJavaAgent() {
-		//Harish number
-		String number = "+919618889577";
+		//Har
+		String number = "+911234567";
 		return number;
 
 	}
 
 	private String getNetAgent() {
 		//Saradhi's number
-		String number = "+917981418416";
+		String number = "+911223444";
 		return number;
 
 	}
