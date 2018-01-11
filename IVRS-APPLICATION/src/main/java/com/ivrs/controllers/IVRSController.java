@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 @RestController
 public class IVRSController {
 
-	static final String PROPERTIES_FILE_NAME = "ivrs.properties";
+	static final String PROPERTIES_FILE_NAME = "./ivrs.properties";
 	static final String CONTROLLER_PHONE = "controller";
 	static final String JAVA_PHONE = "java";
 	static final String DOTNET_PHONE = "dotnet";
